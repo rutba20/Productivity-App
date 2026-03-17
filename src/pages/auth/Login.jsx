@@ -1,13 +1,50 @@
 import React from "react";
+import { useState } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useCrud } from "../../api/useCrud";
 
 function Login() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { create } = useCrud({
+  endpoint: "login",
+  queryKey: "login",
+});
+
+const loginMutation = create();
+  const handleLogin = (values) => {
+
+  loginMutation.mutate(
+    {
+      username: values.username,
+      password: values.password,
+    },
+    {
+      onSuccess: (data) => {
+        console.log("Login success:", data);
+
+        // Example if token returned
+        if (data?.access) {
+          localStorage.setItem("token", data.access);
+        }
+
+        navigate("/dashboard");
+      },
+
+      onError: (error) => {
+        console.error("Login failed:", error);
+        alert("Invalid username or password");
+      },
+    }
+  );
+
+};
   const onFinish = (values) => {
     console.log(values);
   };
-
+  
   return (
     <div style={{
       minHeight: "100vh",
@@ -38,14 +75,18 @@ function Login() {
 
 
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={handleLogin}>
 
             <Form.Item name="email">
-              <Input placeholder="stanley@gmail.com" />
+              <Input placeholder="stanley@gmail.com"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)} />
             </Form.Item>
 
             <Form.Item name="password">
-              <Input.Password placeholder="••••••" />
+              <Input.Password placeholder="••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} />
             </Form.Item>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -60,29 +101,30 @@ function Login() {
               htmlType="submit"
               block
               style={{ marginTop: "20px" }}
+              
             >
               Sign In
             </Button>
 
- {/* SIGN UP SECTION */}
-          <p
-            style={{
-              marginTop: "30px",
-              fontSize: "13px",
-              color: "#555",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
-            onClick={() => navigate("/signup")}
-          >
-            Don't have an account?
+            {/* SIGN UP SECTION */}
+            <p
+              style={{
+                marginTop: "30px",
+                fontSize: "13px",
+                color: "#555",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+              onClick={() => navigate("/signup")}
+            >
+              Don't have an account?
 
-           
-          </p>
+
+            </p>
           </Form>
-         
-  
+
+
         </div>
 
         {/* RIGHT */}
