@@ -1,21 +1,19 @@
 import React from "react";
-import { useState } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useCrud } from "../../api/useCrud";
 
 function Login() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
   const { create } = useCrud({
-  endpoint: "login",
+  endpoint: "login/",
   queryKey: "login",
 });
 
 const loginMutation = create();
   const handleLogin = (values) => {
-
+ console.log("Form submitted:", values);
   loginMutation.mutate(
     {
       username: values.username,
@@ -41,9 +39,7 @@ const loginMutation = create();
   );
 
 };
-  const onFinish = (values) => {
-    console.log(values);
-  };
+ 
   
   return (
     <div style={{
@@ -77,16 +73,14 @@ const loginMutation = create();
 
           <Form layout="vertical" onFinish={handleLogin}>
 
-            <Form.Item name="email">
+            <Form.Item name="username">
               <Input placeholder="stanley@gmail.com"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} />
+                ></Input>
             </Form.Item>
 
             <Form.Item name="password">
               <Input.Password placeholder="••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} />
+                 />
             </Form.Item>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
