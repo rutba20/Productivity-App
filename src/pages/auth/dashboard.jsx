@@ -1,9 +1,35 @@
-
 import "./dashboard.css";
-import React, { useState } from "react";
+import { TasksWidget } from "../../components/TasksWidget";
+import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
+const generateTimeSlots = () => {
+    const slots = [];
+
+    for (let hour = 0; hour < 24; hour++) {
+        for (let min of [0, 30]) {
+            const h = hour.toString().padStart(2, "0");
+            const m = min.toString().padStart(2, "0");
+            slots.push(`${h}:${m}`);
+        }
+    }
+
+    return slots;
+};
+const getCurrentPosition = () => {
+    const now = new Date();
+    const totalMinutes = now.getHours() * 60 + now.getMinutes();
+    return (totalMinutes / (24 * 60)) * 100;
+};
 
 export default function Dashboard() {
+    const timeSlots = generateTimeSlots();
+    const [goals, setGoals] = useState([
+        { text: "Finish ML project", progress: 70 },
+        { text: "Workout 5x/week", progress: 40 },
+        { text: "Apply for internships", progress: 20 },
+    ]);
     return (
         <div className="dashboard-container">
 
@@ -28,7 +54,9 @@ export default function Dashboard() {
                 <nav>
                     <ul>
                         <li className="active">Dashboard</li>
-                        <li>Tasks</li>
+                        <li>
+                            <Link to="/tasks">Tasks</Link>
+                        </li>
                         <li>Goals</li>
                         <li>Calendar</li>
                         <li>Notes</li>
@@ -43,8 +71,6 @@ export default function Dashboard() {
 
                 {/* Top Navbar */}
                 <header className="topbar">
-
-                    <div className="profile">username</div>
 
                 </header>
 
@@ -105,72 +131,71 @@ export default function Dashboard() {
                 </section>
 
                 {/* Main Widgets */}
-                <section className="widgets">
 
-                    <div className="widget tasks">
-                        <div className="widget tasks">
-                            <div className="widget-header">
-                                <h3>Today's Tasks</h3>
-                                <button className="add-task">+ Add</button>
-                            </div>
-
-                            <ul className="task-list">
-                                <li className="task-item">
-                                    <label className="custom-checkbox">
-                                        <input type="checkbox" />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <span className="task-text">Finish SQL practice</span>
-                                </li>
-
-                                <li className="task-item">
-                                    <label className="custom-checkbox">
-                                        <input type="checkbox" />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <span className="task-text">Gym workout</span>
-                                </li>
-
-                                <li className="task-item completed">
-                                    <label className="custom-checkbox">
-                                        <input type="checkbox" defaultChecked />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <span className="task-text">Submit project report</span>
-                                </li>
-
-                                <li className="task-item">
-                                    <label className="custom-checkbox">
-                                        <input type="checkbox" />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                    <span className="task-text">Read 10 pages</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <div className="dashboard-row">
+                    <TasksWidget />
 
                     <div className="widget calendar">
-                        <h3>Schedule</h3>
-                        <p>9:00 — Study</p>
-                        <p>12:00 — Project Work</p>
-                        <p>18:00 — Gym</p>
+                        <h3>Today's Timeline</h3>
+
+                        <div className="timeline">
+                            <div className="timeline-bar">
+                                {timeSlots.map((time, index) => (
+                                    <div key={index} className="time-slot">
+                                        {time}
+                                    </div>
+                                ))}
+                            </div>
+                            <div
+                                className="current-time-line"
+                                style={{ left: `${getCurrentPosition()}%` }}
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="widgets-row">
+
+                    {/* Goals Card */}
+                    <div className="widget">
+                        <h3>Goals</h3>
+                        <ul className="goals-list">
+                            {goals.map((goal, index) => (
+                                <li key={index} className="goal-item">
+
+                                    <div className="goal-header">
+                                        <span>{goal.text}</span>
+                                        <span>{goal.progress}%</span>
+                                    </div>
+
+                                    <div className="progress-bar">
+                                        <div
+                                            className="progress-fill"
+                                            style={{ width: `${goal.progress}%` }}
+                                        ></div>
+                                    </div>
+
+                                </li>
+                            ))}
+                        </ul>
                     </div>
 
-                    <div className="widget goals">
-                        <h3>Goals Progress</h3>
-                        <p>Data Science Prep — 70%</p>
-                        <p>Workout Consistency — 50%</p>
-                    </div>
-
-                    <div className="widget notes">
+                    {/* Quick Notes Card */}
+                    <div className="widget">
                         <h3>Quick Notes</h3>
-                        <textarea placeholder="Write something..."></textarea>
+                        <textarea
+                            placeholder="Write something..."
+                            className="notes-input"
+                        ></textarea>
                     </div>
 
-                </section>
+                </div>
+
+
 
             </main>
-        </div>
+
+        </div >
+
     );
 }

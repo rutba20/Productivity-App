@@ -1,0 +1,67 @@
+.tasks-widget {
+  background: #ffffff;              /* white card */
+  padding: 20px;
+  border-radius: 12px;             /* rounded corners */
+  border:#7c5cff 1px solid; /* purple border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* soft shadow */
+  width: 100%;
+  max-width: 400px;
+}
+/* Title */
+.tasks-widget h3 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+/* Each row */
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Custom rounded checkbox */
+.task-row input[type="checkbox"] {
+  appearance: none;              /* remove default style */
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #7c5cff;     /* purple outline */
+  border-radius: 50%;            /* makes it round */
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* When checked */
+.task-row input[type="checkbox"]:checked {
+  background-color: #7c5cff;     /* fill purple */
+}
+
+/* Checkbox */
+.task-row input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* Purple line (like your screenshot) */
+.task-accent {
+  width: 3px;
+  height: 18px;
+  background: purple;
+  border-radius: 2px;
+}
+
+/* Input */
+.task-input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  flex: 1;
+}
+
+/* Completed */
+.task-input.completed {
+  text-decoration: line-through;
+  color: gray;
+}

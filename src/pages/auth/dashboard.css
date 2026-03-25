@@ -8,7 +8,11 @@
 }
 
 /* Sidebar */
-
+.sidebar a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 .sidebar {
   width: 230px;
   background: linear-gradient(180deg, #6d5bd0, #8b5cf6);
@@ -216,6 +220,17 @@ svg {
   font-weight: 600;
 }
 
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Make both cards responsive */
+.dashboard-row > * {
+  flex: 1;
+}
+
 /* Widget Header */
 
 .widget-header {
@@ -225,47 +240,114 @@ svg {
   margin-bottom: 15px;
 }
 
+.widget.calendar {
+  background: #ffffff;              /* white card */
+  padding: 20px;
+  border-radius: 12px;             /* rounded corners */
+  border:#7c5cff 1px solid; /* purple border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* soft shadow */
+  width: 100%;
+  max-width: 700px;
+}
 
+.widget.calendar h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
 
-/* Task Item */
-
-.task-item {
+.timeline-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  overflow-x: auto;
+  gap: 30px;
+  margin-top: 15px;
+  padding-bottom: 10px;
+}
+
+.time-slot {
+  font-size: 12px;
+  color: #777;
+  text-align: center;
+  min-width: 60px;
+  position: relative;
+}
+
+/* vertical tick line */
+.time-slot::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 20px;
+  background: #ccc;
+  margin: 5px auto 0;
+}
+
+
+
+.widgets-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.widget {
+  flex: 1;
+  width: 230px;
+  background: linear-gradient(180deg, #6d5bd0, #8b5cf6);
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* Goals */
+.goals-list {
+  list-style: none;
+  padding: 0;
+}
+
+.goals-list li {
   padding: 8px 0;
+  border-bottom: 1px solid #333;
 }
 
-/* Round Checkbox */
-
-.checkmark {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #8b5cf6;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-/* Checked */
-
-.task-item.completed .checkmark {
-  background: #8b5cf6;
-}
-
-/* Input */
-
-.task-input {
+/* Notes */
+.notes-input {
+  width: 95%;
+  height: 120px;
+  border-radius: 10px;
   border: none;
-  outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 14px;
+  padding: 10px ;
+  margin-top: 10px;
+  background: #bfbfc3;
+  
+  resize: none;
 }
 
-/* Completed text */
+.goal-item {
+  margin-bottom: 15px;
+}
 
-.task-item.completed .task-input {
-  text-decoration: line-through;
-  opacity: 0.6;
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Progress bar background */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #292969;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Progress fill */
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #fafafd, #8f7bff);
+  border-radius: 10px;
+  transition: width 0.3s ease;
 }
