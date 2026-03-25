@@ -1,0 +1,114 @@
+.tasks-page {
+  display: grid;
+  grid-template-columns: 220px 1fr 300px;
+  height: 100vh;
+  background: #0f172a;
+  color: white;
+}
+
+/* SIDEBAR */
+.tasks-sidebar {
+  background: linear-gradient(180deg, #6d5bd0, #8b5cf6);
+  color: white;
+  padding: 20px;
+  border-right: 1px solid #1f2937;
+}
+
+.tasks-sidebar h3 {
+  margin-bottom: 20px;
+}
+
+.tasks-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tasks-sidebar li {
+  padding: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.tasks-sidebar li:hover {
+  background: #1f2937;
+}
+
+.tasks-sidebar .active {
+  background: #2563eb;
+}
+
+/* MAIN TASK LIST */
+.tasks-main {
+  padding: 20px;
+  background: white;
+  color: #6d5bd0;
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.add-btn {
+  background: #2563eb;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #6d5bd0;
+  color: white;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.task-item:hover {
+  background: #1f2937;
+}
+
+.task-content p {
+  margin: 0;
+}
+
+.task-meta {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.completed p {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+/* DETAILS PANEL */
+.tasks-details {
+  background:#6d5bd0;
+  color: white;
+  padding: 20px;
+  border-left: 1px solid #1f2937;
+}
+
+.timeline-view {
+  flex: 1;
+  margin-top: 10px;
+  background: #111827;
+  border-radius: 10px;
+  padding: 10px;
+}
