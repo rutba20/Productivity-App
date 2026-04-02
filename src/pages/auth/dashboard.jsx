@@ -36,29 +36,16 @@ export default function Dashboard() {
             {/* Sidebar */}
             <aside className="sidebar">
                 <h2 className="logo">AI Task Buddy</h2>
-                <header className="topbar">
 
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="search"
-                    />
-
-                    <div className="topbar-right">
-
-
-
-                    </div>
-
-                </header>
                 <nav>
                     <ul>
                         <li className="active">Dashboard</li>
                         <li>
                             <Link to="/tasks">Tasks</Link>
                         </li>
-                        <li>Goals</li>
-                        <li>Calendar</li>
+                        <li>
+                            <Link to="/Goals">Goals</Link>
+                        </li>
                         <li>Notes</li>
                         <li>Analytics</li>
                         <li>Settings</li>
@@ -71,14 +58,13 @@ export default function Dashboard() {
 
                 {/* Top Navbar */}
                 <header className="topbar">
-
+                    <section className="greeting">
+                        <h2>Hello Rutba!</h2>
+                        <p>Here is your productivity overview</p>
+                    </section>
                 </header>
 
-                {/* Greeting Section */}
-                <section className="greeting">
-                    <h2>Hello Rutba!</h2>
-                    <p>Here is your productivity overview</p>
-                </section>
+
 
                 {/* Stats Cards */}
                 <section className="stats">
