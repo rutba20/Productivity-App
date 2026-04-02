@@ -1,67 +1,97 @@
 .tasks-widget {
-  background: #ffffff;              /* white card */
-  padding: 20px;
-  border-radius: 12px;             /* rounded corners */
-  border:#7c5cff 1px solid; /* purple border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);  /* soft shadow */
+  /* SIZE */
   width: 100%;
-  max-width: 400px;
-}
-/* Title */
-.tasks-widget h3 {
-  font-size: 30px;
-  margin-bottom: 10px;
-}
+  max-width: 600px;   /* slightly bigger */
+  min-height: 180px;  /* increased height */
 
-/* Each row */
+  padding: 22px;
+
+  /* GLASS EFFECT (SOFTER than stat cards) */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+
+  border-radius: 16px;
+  border: 1px solid rgba(124, 92, 255, 0.25);
+
+  /* SUBTLE GLOW */
+  box-shadow: 
+    0 8px 25px rgba(124, 92, 255, 0.15),
+    inset 0 0 10px rgba(255,255,255,0.04);
+
+  color: #e5e7eb;
+
+  transition: all 0.25s ease;
+}
+.tasks-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.15),
+    transparent 60%
+  );
+
+  opacity: 0.6;
+  pointer-events: none;
+}
+.tasks-widget {
+  position: relative;
+}
+.tasks-widget h3 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
 .task-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-top: 12px;
 }
-
-/* Custom rounded checkbox */
+/* Hide default checkbox */
 .task-row input[type="checkbox"] {
-  appearance: none;              /* remove default style */
+  appearance: none;
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #7c5cff;     /* purple outline */
-  border-radius: 50%;            /* makes it round */
+
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #8b5cf6;
+  border-radius: 50%;
+
+  background: transparent;
   cursor: pointer;
   position: relative;
+
   transition: all 0.2s ease;
 }
 
-/* When checked */
 .task-row input[type="checkbox"]:checked {
-  background-color: #7c5cff;     /* fill purple */
+  background-color: #8b5cf6;
 }
-
-/* Checkbox */
-.task-row input[type="checkbox"] {
-  cursor: pointer;
+.task-row input[type="checkbox"]:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
 }
-
-/* Purple line (like your screenshot) */
-.task-accent {
-  width: 3px;
-  height: 18px;
-  background: purple;
-  border-radius: 2px;
-}
-
-/* Input */
 .task-input {
   border: none;
   outline: none;
-  font-size: 16px;
+  font-size: 15px;
   flex: 1;
+
+  background: transparent;
+  color: #e5e7eb;
 }
 
-/* Completed */
-.task-input.completed {
-  text-decoration: line-through;
-  color: gray;
+.task-input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+.tasks-widget:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 12px 35px rgba(124, 92, 255, 0.25),
+    inset 0 0 15px rgba(255,255,255,0.06);
 }

@@ -18,7 +18,7 @@ html, body, #root {
 
   overflow-x: hidden; /* 🔥 prevents horizontal spill */
 }
-
+/* Dashboard Container */
 .dashboard-container {
   display: flex;
   height: 100vh;
@@ -38,7 +38,20 @@ html, body, #root {
 
   color: white;
 }
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  color: #e5e7eb;
+}
 
+/* Make both cards responsive */
+.dashboard-row > * {
+  flex: 1;
+}
+.tasks-widget {
+  flex: 0 0 400px;  /* 👈 makes it wider than others */
+}
 /* Sidebar */
 .sidebar a {
   text-decoration: none;
@@ -116,36 +129,12 @@ html, body, #root {
   margin-bottom: 30px;
 }
 
-/* Search */
-
-/* .search {
-  padding: 10px 14px;
-  width: 260px;
-  border-radius: 8px;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white;
-  outline: none;
-} */
-
 /* Right section */
 
 .topbar-right {
   display: flex;
   align-items: center;
   gap: 15px;
-}
-
-/* Add button */
-
-.add-btn {
-  padding: 8px 16px;
-  background: #8b5cf6;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 /* Profile */
@@ -185,20 +174,100 @@ html, body, #root {
 /* Gradient Cards */
 
 .stat-card {
-  background: linear-gradient(135deg, #6d5bd0, #8b5cf6);
-  color: white;
-  padding: 22px 20px;
-  border-radius: 14px;
-  min-height: 110px;
+  position: relative;
+  padding: 18px;
+  border-radius: 16px;
+  height: 150px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.35);
-  transition: all 0.25s ease;
+  /* GLASSMORPHISM */
+  background: rgba(147, 51, 221, 0.06);
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* GLOW */
+  box-shadow: 
+    0 8px 30px rgba(139, 92, 246, 0.25),
+    inset 0 0 20px rgba(255,255,255,0.05);
+
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    160deg,
+    rgba(139,92,246,0.25),
+    transparent 60%
+  );
+
+  opacity: 0.6;
+  pointer-events: none;
+}
+.stat-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+
+  background: rgba(255,255,255,0.08);
+}
+
+/* Variants */
+
+.stat-icon.purple {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+}
+
+.stat-icon.green {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.stat-icon.orange {
+  background: rgba(249, 115, 22, 0.2);
+  color: #fdba74;
+}
+
+.stat-icon.blue {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+}
+.stat-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 
+    0 12px 40px rgba(139, 92, 246, 0.35),
+    inset 0 0 25px rgba(255,255,255,0.08);
+}
+/* Text */
+.stat-title {
+  font-size: 13px;
+  opacity: 0.85;
+}
+.stat-card h3 {
+  font-size: 22px;
+  font-weight: 600;
 }
 /*visualisation inside cards */
+/* Progress bar background */
 .progress-bar {
   height: 6px;
   background: rgba(255, 255, 255, 0.25);
@@ -207,10 +276,12 @@ html, body, #root {
   overflow: hidden;
 }
 
+/* Progress fill */
 .progress-fill {
   height: 100%;
-  background: white;
+  background: linear-gradient(90deg, #fafafd, #8f7bff);
   border-radius: 10px;
+  transition: width 0.3s ease;
 }
 
 .segments {
@@ -254,36 +325,114 @@ svg {
   transform-origin: center;
 }
 
+/* Streak Grid */
+.streak-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.streak-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  max-height: 70px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+/* Boxes */
+
+.streak-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: 0.2s;
+}
+
+/* Active Day */
+
+.streak-box.active {
+  background: white;
+}
+
+/* Hover */
+
+.streak-box:hover {
+  transform: scale(1.1);
+}
+
+/* AI Card */
+
+.ai-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Content */
+
+.ai-content {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Lines */
+
+.ai-line {
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* Highlight important parts */
+
+.ai-line span {
+  font-weight: 600;
+  color: white;
+}
+
+/* Suggestion box */
+
+.ai-suggestion {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.suggestion-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
 /* Hover effect */
 
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(139, 92, 246, 0.35);
-}
 
-/* Text */
 
-.stat-title {
-  font-size: 13px;
-  opacity: 0.85;
-}
 
-.stat-card h3 {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.dashboard-row {
+/* WIDGETS */
+.widgets-row {
   display: flex;
   gap: 20px;
-  align-items: flex-start;
+  margin-top: 20px;
 }
 
-/* Make both cards responsive */
-.dashboard-row > * {
+.widget {
   flex: 1;
-}
+  width: 230px;
 
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+}
 /* Widget Header */
 
 .widget-header {
@@ -314,16 +463,30 @@ svg {
   display: flex;
   align-items: center;
   overflow-x: auto;
-  gap: 30px;
-  margin-top: 15px;
-  padding-bottom: 10px;
+  gap: 50px; /* more spacing */
+  margin-top: 20px;
+  padding-bottom: 25px;
+
+  position: relative;
+}
+
+/* horizontal line (NEW) */
+.timeline-bar::before {
+  content: "";
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  height: 2px;
+
+  background: rgba(255,255,255,0.2);
 }
 
 .time-slot {
   font-size: 12px;
   color: #cbd5f5;
   text-align: center;
-  min-width: 60px;
+  min-width: 80px;
   position: relative;
 }
 
@@ -332,31 +495,92 @@ svg {
   content: "";
   display: block;
   width: 2px;
-  height: 20px;
-  background: #ccc;
-  margin: 5px auto 0;
+  height: 14px;
+  background: rgba(255,255,255,0.5);
+  margin: 6px auto 0;
+}
+.timeline {
+  position: relative;
 }
 
-
-
-.widgets-row {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
+.timeline-events {
+  position: relative;
+  height: 110px;
+  margin-top: 10px;
 }
 
-.widget {
-  flex: 1;
-  width: 230px;
+/* Event card */
 
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(14px);
+.event-card {
+  position: absolute;
+  top: 10px;
+
+  width: 170px;
+  padding: 10px;
+
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+
   border: 1px solid rgba(255,255,255,0.1);
 
   color: white;
-  padding: 20px;
-  border-radius: 16px;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
+
+/* Highlight card (like lunch) */
+
+.event-card:not(.light) {
+  background: #a3e635;
+  color: #020617;
+  font-weight: 500;
+}
+
+/* Text */
+
+.event-time {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.event-card h4 {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.event-card p {
+  font-size: 12px;
+  opacity: 0.7;
+}
+.current-time-line {
+  position: absolute;
+  top: 20px;
+  bottom: 0;
+  width: 2px;
+
+  background: #a3e635;
+
+  box-shadow: 0 0 10px #a3e635;
+}
+
+/* dot on top */
+.current-time-line::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -4px;
+
+  width: 10px;
+  height: 10px;
+
+  background: #a3e635;
+  border-radius: 50%;
+}
+
+
+
 
 /* Goals */
 .goals-list {
@@ -395,19 +619,10 @@ svg {
   margin-bottom: 6px;
 }
 
-/* Progress bar background */
-.progress-bar {
-  width: 100%;
-  height: 6px;
-  background: #292969;
-  border-radius: 10px;
-  overflow: hidden;
-}
 
-/* Progress fill */
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #fafafd, #8f7bff);
-  border-radius: 10px;
-  transition: width 0.3s ease;
-}
+
+
+
+
+
+
