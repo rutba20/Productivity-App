@@ -3,6 +3,7 @@ import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
 import Dashboard from "../pages/auth/dashboard";
 import Tasks from "../pages/auth/Tasks";
+import Goals from "../pages/auth/goals/Goals";
 
 const AppRoutes = () => {
   return (
@@ -12,6 +13,8 @@ const AppRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Tasks" element={<Tasks />} />
+        <Route path="/Goals" element={<Goals />} />
+        
 
       </Routes>
     </BrowserRouter>
