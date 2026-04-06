@@ -4,14 +4,15 @@ import GoalCard from "../../../components/goals/GoalCard";
 import Modal from "../../../components/common/Modal";
 
 
-
 const GoalsPage = () => {
     const [aiInput, setAiInput] = useState("");
     // goal modal state
     const [showModal, setShowModal] = useState(false);
     // ai modal state
     const [showAIModal, setShowAIModal] = useState(false);
-    // state for AI modal 
+    const [selectedCategory, setSelectedCategory] = useState("All");
+
+    // function for AI modal 
    const generateAIGoal = () => {
      if (!aiInput.trim()) return;
 
@@ -79,36 +80,16 @@ const GoalsPage = () => {
         color: "green",
       },
     ]);
-     const [form, setForm] = useState({
-       title: "",
-       description: "",
-       category: "Career",
-       priority: "medium",
-       milestones: [{ title: "", tasks: [""] }],
-     });
+    const [form, setForm] = useState({
+      title: "",
+      description: "",
+      category: "Career",
+      priority: "medium",
+      milestone: "",
+      task: "",
+    });
 
-     const addMilestone = () => {
-       setForm({
-         ...form,
-         milestones: [...form.milestones, { title: "", tasks: [""] }],
-       });
-     };
-     const updateMilestone = (index, value) => {
-       const updated = [...form.milestones];
-       updated[index].title = value;
-       setForm({ ...form, milestones: updated });
-     };
-     const addTask = (mIndex) => {
-       const updated = [...form.milestones];
-       updated[mIndex].tasks.push("");
-       setForm({ ...form, milestones: updated });
-     };
-     const updateTask = (mIndex, tIndex, value) => {
-       const updated = [...form.milestones];
-       updated[mIndex].tasks[tIndex] = value;
-       setForm({ ...form, milestones: updated });
-     };
-
+  
      const handleAddGoal = (e) => {
        e.preventDefault(); // prevents page reload (important if using <form>)
 
@@ -124,6 +105,12 @@ const GoalsPage = () => {
          totalMilestones: 0,
          dueDate: "No date",
          color: "blue",
+         milestones: [
+           {
+             title: form.milestone,
+             tasks: [form.task],
+           },
+         ],
        };
 
        setGoals((prev) => [...prev, newGoal]); // add new goal
@@ -132,9 +119,10 @@ const GoalsPage = () => {
        setForm({
          title: "",
          description: "",
-         category: "Career",
-         priority: "medium",
-         milestones: [{ title: "", tasks: [""] }],
+         category: "",
+         priority: "",
+         milestone: "",
+         task: "",
        });
        setShowModal(false); // close modal
      };
@@ -177,19 +165,30 @@ const GoalsPage = () => {
 
         {/* Filters */}
         <div className="goals-filters">
-          <button className="active">All</button>
-          <button>Career</button>
-          <button>Health</button>
-          <button>Study</button>
+          {["All", "Career", "Health", "Study"].map((cat) => (
+            <button
+              key={cat}
+              className={selectedCategory === cat ? "active" : ""}
+              onClick={() => setSelectedCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
 
         {/* Cards */}
         <div className="goals-grid">
-          {goals.map((goal, i) => (
-            <GoalCard key={i} goal={goal} />
-          ))}
+          {goals
+            .filter((goal) =>
+              selectedCategory === "All"
+                ? true
+                : goal.category === selectedCategory,
+            )
+            .map((goal, i) => (
+              <GoalCard key={i} goal={goal} />
+            ))}
         </div>
-
+{/* add goal modal */}
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <h2>Add Goal</h2>
 
@@ -204,34 +203,6 @@ const GoalsPage = () => {
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
           />
-          {/* 🔥 MILESTONES */}
-          {form.milestones.map((m, mIndex) => (
-            <div key={mIndex} className="milestone-block">
-              <input
-                placeholder="Milestone title"
-                value={m.title}
-                onChange={(e) => updateMilestone(mIndex, e.target.value)}
-              />
-
-              {/* TASKS */}
-              {m.tasks.map((task, tIndex) => (
-                <input
-                  key={tIndex}
-                  placeholder="Task"
-                  value={task}
-                  onChange={(e) => updateTask(mIndex, tIndex, e.target.value)}
-                />
-              ))}
-
-              <button type="button" onClick={() => addTask(mIndex)}>
-                + Add Task
-              </button>
-            </div>
-          ))}
-
-          <button type="button" onClick={addMilestone}>
-            + Add Milestone
-          </button>
           <select
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value })}
@@ -250,12 +221,27 @@ const GoalsPage = () => {
             <option value="high">High</option>
           </select>
 
+          {/* 🔥 MILESTONES */}
+          <div className="milestone-block">
+            <input
+              placeholder="Milestone"
+              value={form.milestone}
+              onChange={(e) => setForm({ ...form, milestone: e.target.value })}
+            />
+
+            <input
+              placeholder="Task"
+              value={form.task}
+              onChange={(e) => setForm({ ...form, task: e.target.value })}
+            />
+          </div>
+
           <div className="modal-actions">
             <button onClick={() => setShowModal(false)}>Cancel</button>
             <button onClick={handleAddGoal}>Add</button>
           </div>
-          
         </Modal>
+        {/* AI modal */}
         <Modal isOpen={showAIModal} onClose={() => setShowAIModal(false)}>
           <h2>AI Goal Breakdown</h2>
 
